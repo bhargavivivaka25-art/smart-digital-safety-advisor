@@ -12,20 +12,18 @@
 
 <body>
 
-    <div class="background-glow glow-one"></div>
-    <div class="background-glow glow-two"></div>
+    <div class="glow glow1"></div>
+    <div class="glow glow2"></div>
 
     <main class="container">
 
-        <!-- HEADER -->
+        <!-- HERO -->
 
-        <header class="hero">
+        <section class="hero">
 
-            <div class="shield">
-                🛡️
-            </div>
+            <div class="shield">🛡️</div>
 
-            <p class="system-name">
+            <p class="system-title">
                 DIGITAL SAFETY SYSTEM
             </p>
 
@@ -38,12 +36,12 @@
                 reply or share information.
             </p>
 
-        </header>
+        </section>
 
 
         <!-- INTRO -->
 
-        <section class="intro-card">
+        <section class="intro">
 
             <div class="intro-icon">
                 💡
@@ -68,7 +66,7 @@
 
         <section class="card">
 
-            <div class="section-heading">
+            <div class="heading">
 
                 <span>
                     SECURITY CHECK
@@ -81,7 +79,7 @@
             </div>
 
 
-            <!-- QUESTION 1 -->
+            <!-- 01 -->
 
             <div class="question">
 
@@ -89,7 +87,7 @@
                     01
                 </div>
 
-                <div class="question-content">
+                <div class="question-body">
 
                     <h3>
                         Unknown Sender
@@ -116,7 +114,7 @@
             </div>
 
 
-            <!-- QUESTION 2 -->
+            <!-- 02 -->
 
             <div class="question">
 
@@ -124,7 +122,7 @@
                     02
                 </div>
 
-                <div class="question-content">
+                <div class="question-body">
 
                     <h3>
                         Urgent Message
@@ -151,7 +149,7 @@
             </div>
 
 
-            <!-- QUESTION 3 -->
+            <!-- 03 -->
 
             <div class="question">
 
@@ -159,7 +157,7 @@
                     03
                 </div>
 
-                <div class="question-content">
+                <div class="question-body">
 
                     <h3>
                         Suspicious Link
@@ -186,7 +184,7 @@
             </div>
 
 
-            <!-- QUESTION 4 -->
+            <!-- 04 -->
 
             <div class="question">
 
@@ -194,7 +192,7 @@
                     04
                 </div>
 
-                <div class="question-content">
+                <div class="question-body">
 
                     <h3>
                         OTP / Password Request
@@ -221,7 +219,7 @@
             </div>
 
 
-            <!-- QUESTION 5 -->
+            <!-- 05 -->
 
             <div class="question">
 
@@ -229,7 +227,7 @@
                     05
                 </div>
 
-                <div class="question-content">
+                <div class="question-body">
 
                     <h3>
                         Unrealistic Offer
@@ -256,17 +254,13 @@
             </div>
 
 
-            <!-- BUTTON -->
-
             <button
                 class="analyze-btn"
                 onclick="checkSafety()">
 
                 🔍 ANALYZE SAFETY
 
-                <span>
-                    →
-                </span>
+                <span>→</span>
 
             </button>
 
@@ -279,7 +273,7 @@
             class="result-card"
             id="result">
 
-            <div class="result-heading">
+            <div class="heading">
 
                 <span>
                     SECURITY REPORT
@@ -294,12 +288,34 @@
 
             <!-- SCORE -->
 
-            <div class="score-area">
+            <div class="score-section">
 
-                <div
-                    class="score-ring">
+                <div class="score-circle">
 
-                    <div class="score-inside">
+                    <svg
+                        class="progress-ring"
+                        width="220"
+                        height="220">
+
+                        <circle
+                            class="ring-bg"
+                            cx="110"
+                            cy="110"
+                            r="95">
+                        </circle>
+
+                        <circle
+                            id="progressCircle"
+                            class="ring-progress"
+                            cx="110"
+                            cy="110"
+                            r="95">
+                        </circle>
+
+                    </svg>
+
+
+                    <div class="score-content">
 
                         <div
                             id="resultIcon"
@@ -317,16 +333,16 @@
 
                         </div>
 
-                        <span>
+                        <div class="out-of">
                             / 100
-                        </span>
+                        </div>
 
                     </div>
 
                 </div>
 
 
-                <p class="risk-caption">
+                <p class="current-risk">
                     CURRENT RISK LEVEL
                 </p>
 
@@ -341,13 +357,13 @@
             </div>
 
 
-            <!-- MAIN METER -->
+            <!-- MAIN PROGRESS -->
 
-            <div class="meter">
+            <div class="main-meter">
 
                 <div
                     id="meterFill"
-                    class="meter-fill">
+                    class="main-meter-fill">
 
                 </div>
 
@@ -488,8 +504,6 @@
             </div>
 
 
-            <!-- RESET -->
-
             <button
                 class="reset-btn"
                 onclick="resetAssessment()">
@@ -499,7 +513,7 @@
             </button>
 
 
-            <p class="footer-note">
+            <p class="footer">
                 🔐 Rule-Based Digital Safety Assessment
             </p>
 
