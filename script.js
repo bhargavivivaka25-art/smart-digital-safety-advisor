@@ -3,9 +3,9 @@
 // ==========================================
 
 
-// Risk points for each safety factor
+// Risk weights
 
-const RISK_POINTS = {
+const RISK = {
     sender: 15,
     urgent: 15,
     link: 25,
@@ -15,12 +15,10 @@ const RISK_POINTS = {
 
 
 // ==========================================
-// ANALYZE SAFETY
+// ANALYZE
 // ==========================================
 
 function checkSafety() {
-
-    // Get answers from the website
 
     const sender =
         Number(document.getElementById("sender").value);
@@ -38,27 +36,25 @@ function checkSafety() {
         Number(document.getElementById("offer").value);
 
 
-    // Calculate individual risk points
+    // Calculate risk
 
     const senderRisk =
-        sender === 1 ? RISK_POINTS.sender : 0;
+        sender * RISK.sender;
 
     const urgentRisk =
-        urgent === 1 ? RISK_POINTS.urgent : 0;
+        urgent * RISK.urgent;
 
     const linkRisk =
-        link === 1 ? RISK_POINTS.link : 0;
+        link * RISK.link;
 
     const otpRisk =
-        otp === 1 ? RISK_POINTS.otp : 0;
+        otp * RISK.otp;
 
     const offerRisk =
-        offer === 1 ? RISK_POINTS.offer : 0;
+        offer * RISK.offer;
 
 
-    // Calculate total score
-
-    const totalScore =
+    const total =
         senderRisk +
         urgentRisk +
         linkRisk +
@@ -66,238 +62,225 @@ function checkSafety() {
         offerRisk;
 
 
-    // ==========================================
-    // DISPLAY SCORE
-    // ==========================================
+    // Score animation
 
-    animateScore(totalScore);
+    animateScore(total);
 
 
-    // Main progress meter
+    // Main progress bar
 
-    const meter =
-        document.getElementById("meterFill");
+    document.getElementById(
+        "meterFill"
+    ).style.width = total + "%";
 
-    meter.style.width = totalScore + "%";
 
+    // Breakdown numbers
 
-    // ==========================================
-    // DISPLAY BREAKDOWN
-    // ==========================================
-
-    document.getElementById("senderPoints").textContent =
+    document.getElementById(
+        "senderPoints"
+    ).textContent =
         senderRisk + " / 15";
 
-    document.getElementById("urgentPoints").textContent =
+    document.getElementById(
+        "urgentPoints"
+    ).textContent =
         urgentRisk + " / 15";
 
-    document.getElementById("linkPoints").textContent =
+    document.getElementById(
+        "linkPoints"
+    ).textContent =
         linkRisk + " / 25";
 
-    document.getElementById("otpPoints").textContent =
+    document.getElementById(
+        "otpPoints"
+    ).textContent =
         otpRisk + " / 30";
 
-    document.getElementById("offerPoints").textContent =
+    document.getElementById(
+        "offerPoints"
+    ).textContent =
         offerRisk + " / 15";
 
 
     // Breakdown bars
 
-    document.getElementById("senderBar").style.width =
+    document.getElementById(
+        "senderBar"
+    ).style.width =
         (senderRisk / 15 * 100) + "%";
 
-    document.getElementById("urgentBar").style.width =
+
+    document.getElementById(
+        "urgentBar"
+    ).style.width =
         (urgentRisk / 15 * 100) + "%";
 
-    document.getElementById("linkBar").style.width =
+
+    document.getElementById(
+        "linkBar"
+    ).style.width =
         (linkRisk / 25 * 100) + "%";
 
-    document.getElementById("otpBar").style.width =
+
+    document.getElementById(
+        "otpBar"
+    ).style.width =
         (otpRisk / 30 * 100) + "%";
 
-    document.getElementById("offerBar").style.width =
+
+    document.getElementById(
+        "offerBar"
+    ).style.width =
         (offerRisk / 15 * 100) + "%";
 
 
-    // ==========================================
-    // DETERMINE RISK LEVEL
-    // ==========================================
+    // Risk level
 
     let level;
     let icon;
+    let color;
 
-    if (totalScore >= 70) {
+
+    if (total >= 70) {
 
         level = "HIGH RISK";
         icon = "🚨";
+        color = "#ef4444";
 
     }
-    else if (totalScore >= 40) {
+
+    else if (total >= 40) {
 
         level = "MEDIUM RISK";
         icon = "⚠️";
+        color = "#f59e0b";
 
     }
+
     else {
 
         level = "LOW RISK";
         icon = "🛡️";
+        color = "#22c55e";
 
     }
 
 
-    // Display level
+    document.getElementById(
+        "level"
+    ).textContent = level;
 
-    document.getElementById("level").textContent =
-        level;
+    document.getElementById(
+        "level"
+    ).style.color = color;
 
-    document.getElementById("resultIcon").textContent =
-        icon;
-
-
-    // Change risk level appearance
-
-    const levelElement =
-        document.getElementById("level");
-
-    if (totalScore >= 70) {
-
-        levelElement.style.color = "#ef4444";
-
-    }
-    else if (totalScore >= 40) {
-
-        levelElement.style.color = "#f59e0b";
-
-    }
-    else {
-
-        levelElement.style.color = "#22c55e";
-
-    }
+    document.getElementById(
+        "resultIcon"
+    ).textContent = icon;
 
 
     // ==========================================
-    // RISK ANALYSIS
+    // ANALYSIS
     // ==========================================
 
-    let analysisHTML =
-        "<h3>🔍 Risk Analysis</h3>";
+    let analysis = `
+        <h3>🔍 Risk Analysis</h3>
+    `;
 
 
-    if (sender === 1) {
-
-        analysisHTML +=
-            "<p>⚠️ Unknown sender detected</p>";
-
-    }
-    else {
-
-        analysisHTML +=
-            "<p>✓ Sender appears known</p>";
-
-    }
+    analysis += sender
+        ? "<p>⚠️ Unknown sender detected</p>"
+        : "<p>✓ Sender appears known</p>";
 
 
-    if (urgent === 1) {
-
-        analysisHTML +=
-            "<p>⚠️ Urgent or threatening language detected</p>";
-
-    }
-    else {
-
-        analysisHTML +=
-            "<p>✓ No urgent language detected</p>";
-
-    }
+    analysis += urgent
+        ? "<p>⚠️ Urgent or threatening language detected</p>"
+        : "<p>✓ No urgent language detected</p>";
 
 
-    if (link === 1) {
-
-        analysisHTML +=
-            "<p>⚠️ Suspicious link detected</p>";
-
-    }
-    else {
-
-        analysisHTML +=
-            "<p>✓ No suspicious link detected</p>";
-
-    }
+    analysis += link
+        ? "<p>⚠️ Suspicious link detected</p>"
+        : "<p>✓ No suspicious link detected</p>";
 
 
-    if (otp === 1) {
-
-        analysisHTML +=
-            "<p>⚠️ OTP/password request detected</p>";
-
-    }
-    else {
-
-        analysisHTML +=
-            "<p>✓ No OTP/password request detected</p>";
-
-    }
+    analysis += otp
+        ? "<p>⚠️ OTP/password request detected</p>"
+        : "<p>✓ No OTP/password request detected</p>";
 
 
-    if (offer === 1) {
-
-        analysisHTML +=
-            "<p>⚠️ Unrealistic offer detected</p>";
-
-    }
-    else {
-
-        analysisHTML +=
-            "<p>✓ No unrealistic offer detected</p>";
-
-    }
+    analysis += offer
+        ? "<p>⚠️ Unrealistic offer detected</p>"
+        : "<p>✓ No unrealistic offer detected</p>";
 
 
-    document.getElementById("analysis").innerHTML =
-        analysisHTML;
+    document.getElementById(
+        "analysis"
+    ).innerHTML = analysis;
 
 
     // ==========================================
-    // RECOMMENDED ACTION
+    // RECOMMENDATION
     // ==========================================
 
-    let recommendationHTML =
-        "<h3>🛡️ Recommended Action</h3>";
+    let recommendation;
 
 
-    if (totalScore >= 70) {
+    if (total >= 70) {
 
-        recommendationHTML +=
-            "<p><strong>HIGH RISK:</strong> Do not click suspicious links or share OTP, passwords or payment information. Verify the source through an official channel.</p>";
+        recommendation = `
+            <h3>🚨 Recommended Action</h3>
+
+            <p>
+                <strong>HIGH RISK:</strong>
+                Do not click suspicious links or share
+                OTP, passwords or payment information.
+                Verify the source through an official channel.
+            </p>
+        `;
 
     }
-    else if (totalScore >= 40) {
 
-        recommendationHTML +=
-            "<p><strong>MEDIUM RISK:</strong> Verify the sender or source before taking any action.</p>";
+    else if (total >= 40) {
+
+        recommendation = `
+            <h3>🟠 Recommended Action</h3>
+
+            <p>
+                <strong>MEDIUM RISK:</strong>
+                Verify the sender or source before taking
+                any action.
+            </p>
+        `;
 
     }
+
     else {
 
-        recommendationHTML +=
-            "<p><strong>LOW RISK:</strong> No major warning signs detected. You can proceed, but always stay cautious.</p>";
+        recommendation = `
+            <h3>🟢 Recommended Action</h3>
+
+            <p>
+                <strong>LOW RISK:</strong>
+                No major warning signs detected.
+                You can proceed, but always stay cautious.
+            </p>
+        `;
 
     }
 
 
-    document.getElementById("recommendation").innerHTML =
-        recommendationHTML;
+    document.getElementById(
+        "recommendation"
+    ).innerHTML = recommendation;
 
 
-    // ==========================================
-    // SCROLL TO RESULT
-    // ==========================================
+    // Scroll to result
 
-    setTimeout(function () {
+    setTimeout(() => {
 
-        document.getElementById("result").scrollIntoView({
+        document.getElementById(
+            "result"
+        ).scrollIntoView({
             behavior: "smooth",
             block: "start"
         });
@@ -308,7 +291,7 @@ function checkSafety() {
 
 
 // ==========================================
-// SCORE ANIMATION
+// SCORE + CIRCLE ANIMATION
 // ==========================================
 
 function animateScore(finalScore) {
@@ -316,37 +299,115 @@ function animateScore(finalScore) {
     const scoreElement =
         document.getElementById("scoreNumber");
 
-    let currentScore = 0;
+    const circle =
+        document.getElementById("progressCircle");
+
+
+    // Circle circumference
+    // 2 × π × 95 ≈ 597
+
+    const circumference = 597;
+
+
+    circle.style.strokeDasharray =
+        circumference;
+
+    circle.style.strokeDashoffset =
+        circumference;
+
+
+    let startTime = null;
 
     const duration = 1200;
 
-    const startTime = performance.now();
 
+    function animation(currentTime) {
 
-    function updateScore(currentTime) {
+        if (!startTime) {
+            startTime = currentTime;
+        }
+
 
         const elapsed =
             currentTime - startTime;
 
+
         const progress =
-            Math.min(elapsed / duration, 1);
+            Math.min(
+                elapsed / duration,
+                1
+            );
 
 
-        // Smooth animation
+        // Smooth easing
 
-        currentScore =
-            Math.floor(finalScore * progress);
+        const eased =
+            1 -
+            Math.pow(
+                1 - progress,
+                3
+            );
 
+
+        const currentScore =
+            Math.floor(
+                finalScore * eased
+            );
+
+
+        // Number
 
         scoreElement.textContent =
             currentScore;
 
 
-        if (progress < 1) {
+        // Circular progress
 
-            requestAnimationFrame(updateScore);
+        const offset =
+            circumference -
+            (
+                currentScore /
+                100
+            ) *
+            circumference;
+
+
+        circle.style.strokeDashoffset =
+            offset;
+
+
+        // Circle color
+
+        if (finalScore >= 70) {
+
+            circle.style.stroke =
+                "#ef4444";
 
         }
+
+        else if (finalScore >= 40) {
+
+            circle.style.stroke =
+                "#f59e0b";
+
+        }
+
+        else {
+
+            circle.style.stroke =
+                "#22c55e";
+
+        }
+
+
+        if (progress < 1) {
+
+            requestAnimationFrame(
+                animation
+            );
+
+        }
+
         else {
 
             scoreElement.textContent =
@@ -357,8 +418,9 @@ function animateScore(finalScore) {
     }
 
 
-    requestAnimationFrame(updateScore);
-
+    requestAnimationFrame(
+        animation
+    );
 }
 
 
@@ -368,99 +430,137 @@ function animateScore(finalScore) {
 
 function resetAssessment() {
 
-    // Reset all selections
+    document.getElementById(
+        "sender"
+    ).value = "0";
 
-    document.getElementById("sender").value = "0";
+    document.getElementById(
+        "urgent"
+    ).value = "0";
 
-    document.getElementById("urgent").value = "0";
+    document.getElementById(
+        "link"
+    ).value = "0";
 
-    document.getElementById("link").value = "0";
+    document.getElementById(
+        "otp"
+    ).value = "0";
 
-    document.getElementById("otp").value = "0";
-
-    document.getElementById("offer").value = "0";
-
-
-    // Reset score
-
-    document.getElementById("scoreNumber").textContent =
-        "0";
-
-
-    // Reset meter
-
-    document.getElementById("meterFill").style.width =
-        "0%";
+    document.getElementById(
+        "offer"
+    ).value = "0";
 
 
-    // Reset breakdown numbers
+    // Score
 
-    document.getElementById("senderPoints").textContent =
-        "0 / 15";
-
-    document.getElementById("urgentPoints").textContent =
-        "0 / 15";
-
-    document.getElementById("linkPoints").textContent =
-        "0 / 25";
-
-    document.getElementById("otpPoints").textContent =
-        "0 / 30";
-
-    document.getElementById("offerPoints").textContent =
-        "0 / 15";
+    document.getElementById(
+        "scoreNumber"
+    ).textContent = "0";
 
 
-    // Reset breakdown bars
+    // Circle
 
-    document.getElementById("senderBar").style.width =
-        "0%";
+    const circle =
+        document.getElementById(
+            "progressCircle"
+        );
 
-    document.getElementById("urgentBar").style.width =
-        "0%";
+    circle.style.strokeDashoffset =
+        "597";
 
-    document.getElementById("linkBar").style.width =
-        "0%";
-
-    document.getElementById("otpBar").style.width =
-        "0%";
-
-    document.getElementById("offerBar").style.width =
-        "0%";
-
-
-    // Reset risk level
-
-    document.getElementById("level").textContent =
-        "LOW RISK";
-
-    document.getElementById("level").style.color =
+    circle.style.stroke =
         "#22c55e";
 
 
-    // Reset icon
+    // Meter
 
-    document.getElementById("resultIcon").textContent =
+    document.getElementById(
+        "meterFill"
+    ).style.width = "0%";
+
+
+    // Breakdown
+
+    document.getElementById(
+        "senderPoints"
+    ).textContent = "0 / 15";
+
+    document.getElementById(
+        "urgentPoints"
+    ).textContent = "0 / 15";
+
+    document.getElementById(
+        "linkPoints"
+    ).textContent = "0 / 25";
+
+    document.getElementById(
+        "otpPoints"
+    ).textContent = "0 / 30";
+
+    document.getElementById(
+        "offerPoints"
+    ).textContent = "0 / 15";
+
+
+    document.getElementById(
+        "senderBar"
+    ).style.width = "0%";
+
+    document.getElementById(
+        "urgentBar"
+    ).style.width = "0%";
+
+    document.getElementById(
+        "linkBar"
+    ).style.width = "0%";
+
+    document.getElementById(
+        "otpBar"
+    ).style.width = "0%";
+
+    document.getElementById(
+        "offerBar"
+    ).style.width = "0%";
+
+
+    // Risk level
+
+    document.getElementById(
+        "level"
+    ).textContent =
+        "LOW RISK";
+
+    document.getElementById(
+        "level"
+    ).style.color =
+        "#22c55e";
+
+
+    // Icon
+
+    document.getElementById(
+        "resultIcon"
+    ).textContent =
         "🛡️";
 
 
-    // Clear analysis
+    // Clear result sections
 
-    document.getElementById("analysis").innerHTML =
-        "";
+    document.getElementById(
+        "analysis"
+    ).innerHTML = "";
+
+    document.getElementById(
+        "recommendation"
+    ).innerHTML = "";
 
 
-    // Clear recommendation
+    // Scroll
 
-    document.getElementById("recommendation").innerHTML =
-        "";
-
-
-    // Go back to safety check
-
-    document.querySelector(".card").scrollIntoView({
-        behavior: "smooth",
-        block: "start"
+    document.querySelector(
+        ".card"
+    ).scrollIntoView({
+        behavior: "smooth"
     });
 
 }
