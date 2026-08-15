@@ -1,0 +1,888 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+
+    color: #e2e8f0;
+
+    background:
+        radial-gradient(circle at 20% 20%, #172554 0, transparent 30%),
+        radial-gradient(circle at 80% 70%, #312e81 0, transparent 30%),
+        #020617;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.background-glow {
+    position: fixed;
+
+    width: 350px;
+    height: 350px;
+
+    border-radius: 50%;
+
+    filter: blur(100px);
+
+    opacity: 0.18;
+
+    pointer-events: none;
+
+    animation: floatingGlow 8s ease-in-out infinite;
+}
+
+.glow-one {
+    background: #2563eb;
+
+    top: -100px;
+    left: -100px;
+}
+
+.glow-two {
+    background: #7c3aed;
+
+    bottom: -100px;
+    right: -100px;
+
+    animation-delay: 3s;
+}
+
+@keyframes floatingGlow {
+
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(40px, -30px);
+    }
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.container {
+    width: min(950px, 92%);
+
+    margin: auto;
+
+    padding: 70px 0;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    text-align: center;
+
+    animation: fadeDown 1s ease;
+}
+
+.shield {
+    width: 80px;
+    height: 80px;
+
+    margin: auto;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 40px;
+
+    border-radius: 24px;
+
+    background: rgba(37, 99, 235, 0.12);
+
+    border: 1px solid rgba(96, 165, 250, 0.25);
+
+    box-shadow:
+        0 0 40px rgba(37, 99, 235, 0.25);
+
+    animation:
+        shieldFloat 3s ease-in-out infinite,
+        pulseGlow 3s ease-in-out infinite;
+}
+
+.system-name {
+    margin-top: 25px;
+
+    font-size: 12px;
+
+    letter-spacing: 4px;
+
+    color: #60a5fa;
+
+    font-weight: bold;
+}
+
+.hero h1 {
+    margin-top: 14px;
+
+    font-size: clamp(34px, 6vw, 58px);
+
+    line-height: 1.1;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #93c5fd,
+            #c4b5fd,
+            #ffffff
+        );
+
+    background-size: 250%;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+
+    animation: gradientMove 5s linear infinite;
+}
+
+.subtitle {
+    max-width: 650px;
+
+    margin: 20px auto 0;
+
+    color: #94a3b8;
+
+    font-size: 16px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================
+   INTRO
+========================= */
+
+.intro-card {
+    margin-top: 55px;
+
+    padding: 28px;
+
+    display: flex;
+
+    gap: 20px;
+
+    align-items: flex-start;
+
+    border-radius: 22px;
+
+    background: rgba(15, 23, 42, 0.65);
+
+    border: 1px solid rgba(148, 163, 184, 0.1);
+
+    backdrop-filter: blur(20px);
+
+    animation: fadeUp 1s ease;
+}
+
+.intro-icon {
+    font-size: 30px;
+}
+
+.intro-card h2 {
+    font-size: 21px;
+
+    margin-bottom: 9px;
+}
+
+.intro-card p {
+    color: #94a3b8;
+
+    line-height: 1.7;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.card,
+.result-card {
+    margin-top: 25px;
+
+    padding: 35px;
+
+    border-radius: 26px;
+
+    background: rgba(15, 23, 42, 0.7);
+
+    border: 1px solid rgba(148, 163, 184, 0.1);
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.25);
+
+    animation: fadeUp 1s ease;
+}
+
+.section-heading span,
+.result-heading span {
+    color: #60a5fa;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    letter-spacing: 3px;
+}
+
+.section-heading h2,
+.result-heading h2 {
+    margin-top: 8px;
+
+    font-size: 28px;
+}
+
+
+/* =========================
+   QUESTIONS
+========================= */
+
+.question {
+    margin-top: 25px;
+
+    padding: 23px;
+
+    display: flex;
+
+    gap: 18px;
+
+    border-radius: 18px;
+
+    background: rgba(2, 6, 23, 0.45);
+
+    border: 1px solid rgba(148, 163, 184, 0.07);
+
+    transition:
+        transform 0.3s ease,
+        border 0.3s ease,
+        background 0.3s ease;
+}
+
+.question:hover {
+    transform: translateY(-4px);
+
+    border-color: rgba(96, 165, 250, 0.35);
+
+    background: rgba(30, 41, 59, 0.7);
+}
+
+.number {
+    color: #60a5fa;
+
+    font-weight: bold;
+
+    font-size: 13px;
+
+    padding-top: 3px;
+}
+
+.question-content {
+    flex: 1;
+}
+
+.question h3 {
+    font-size: 17px;
+}
+
+.question p {
+    margin-top: 6px;
+
+    color: #94a3b8;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================
+   SELECT
+========================= */
+
+select {
+    margin-top: 15px;
+
+    width: 100%;
+
+    padding: 13px 15px;
+
+    border-radius: 12px;
+
+    border: 1px solid #334155;
+
+    outline: none;
+
+    background: #0f172a;
+
+    color: #e2e8f0;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    transition: 0.3s;
+}
+
+select:hover,
+select:focus {
+    border-color: #60a5fa;
+
+    box-shadow:
+        0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+
+/* =========================
+   ANALYZE BUTTON
+========================= */
+
+.analyze-btn {
+    width: 100%;
+
+    margin-top: 30px;
+
+    padding: 17px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            90deg,
+            #2563eb,
+            #7c3aed
+        );
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 30px rgba(37, 99, 235, 0.25);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.analyze-btn span {
+    margin-left: 8px;
+
+    transition: transform 0.3s ease;
+}
+
+.analyze-btn:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 15px 40px rgba(124, 58, 237, 0.35);
+}
+
+.analyze-btn:hover span {
+    transform: translateX(6px);
+}
+
+
+/* =========================
+   RESULT
+========================= */
+
+.result-card {
+    margin-top: 40px;
+
+    animation: resultAppear 0.8s ease;
+}
+
+.score-area {
+    text-align: center;
+
+    margin-top: 35px;
+}
+
+.score-ring {
+    width: 190px;
+    height: 190px;
+
+    margin: auto;
+
+    padding: 10px;
+
+    border-radius: 50%;
+
+    background:
+        conic-gradient(
+            #2563eb 0deg,
+            #7c3aed 180deg,
+            #22d3ee 270deg,
+            #1e293b 270deg
+        );
+
+    animation: ringPulse 3s ease-in-out infinite;
+}
+
+.score-inside {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #020617;
+}
+
+.result-icon {
+    font-size: 25px;
+}
+
+.score-number {
+    margin-top: 5px;
+
+    font-size: 48px;
+
+    font-weight: bold;
+}
+
+.score-inside > span {
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+.risk-caption {
+    margin-top: 25px;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    color: #64748b;
+}
+
+.risk-level {
+    margin-top: 8px;
+
+    color: #22c55e;
+
+    font-size: 27px;
+}
+
+
+/* =========================
+   MAIN METER
+========================= */
+
+.meter {
+    width: 100%;
+
+    height: 9px;
+
+    margin-top: 30px;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    background: #1e293b;
+}
+
+.meter-fill {
+    width: 0%;
+
+    height: 100%;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #22c55e,
+            #eab308,
+            #ef4444
+        );
+
+    transition:
+        width 1.5s cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        );
+}
+
+
+/* =========================
+   BREAKDOWN
+========================= */
+
+.breakdown {
+    margin-top: 30px;
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    background: rgba(2, 6, 23, 0.45);
+
+    border: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.breakdown h3 {
+    color: #93c5fd;
+
+    margin-bottom: 22px;
+}
+
+.risk-item {
+    margin-bottom: 18px;
+}
+
+.risk-label {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 8px;
+
+    color: #cbd5e1;
+
+    font-size: 13px;
+}
+
+.risk-label strong {
+    color: #60a5fa;
+}
+
+.risk-bar {
+    height: 8px;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    background: #1e293b;
+}
+
+.risk-bar div {
+    width: 0%;
+
+    height: 100%;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #2563eb,
+            #7c3aed,
+            #22d3ee
+        );
+
+    transition:
+        width 1.2s cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        );
+}
+
+
+/* =========================
+   ANALYSIS
+========================= */
+
+.analysis {
+    margin-top: 25px;
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    background: rgba(15, 23, 42, 0.7);
+
+    border: 1px solid rgba(148, 163, 184, 0.08);
+
+    line-height: 2;
+
+    color: #cbd5e1;
+
+    animation: fadeUp 0.7s ease;
+}
+
+.analysis h3 {
+    color: #93c5fd;
+
+    margin-bottom: 10px;
+}
+
+.analysis p {
+    color: #cbd5e1;
+}
+
+
+/* =========================
+   RECOMMENDATION
+========================= */
+
+.recommendation {
+    margin-top: 20px;
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(37, 99, 235, 0.1),
+            rgba(124, 58, 237, 0.1)
+        );
+
+    border: 1px solid rgba(96, 165, 250, 0.12);
+
+    line-height: 1.8;
+
+    color: #cbd5e1;
+
+    animation: fadeUp 0.8s ease;
+}
+
+.recommendation h3 {
+    color: #93c5fd;
+
+    margin-bottom: 10px;
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+.reset-btn {
+    width: 100%;
+
+    margin-top: 25px;
+
+    padding: 14px;
+
+    border-radius: 13px;
+
+    border: 1px solid #334155;
+
+    background: transparent;
+
+    color: #94a3b8;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.reset-btn:hover {
+    color: white;
+
+    border-color: #60a5fa;
+
+    background: rgba(96, 165, 250, 0.08);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer-note {
+    margin-top: 25px;
+
+    text-align: center;
+
+    color: #64748b;
+
+    font-size: 12px;
+}
+
+.stay-safe {
+    margin-top: 8px;
+
+    text-align: center;
+
+    color: #60a5fa;
+
+    font-size: 13px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes fadeDown {
+
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+@keyframes fadeUp {
+
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+@keyframes resultAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+@keyframes shieldFloat {
+
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+}
+
+@keyframes pulseGlow {
+
+    0%, 100% {
+        box-shadow:
+            0 0 30px rgba(37, 99, 235, 0.2);
+    }
+
+    50% {
+        box-shadow:
+            0 0 55px rgba(124, 58, 237, 0.4);
+    }
+
+}
+
+@keyframes ringPulse {
+
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.025);
+    }
+
+}
+
+@keyframes gradientMove {
+
+    0% {
+        background-position: 0%;
+    }
+
+    100% {
+        background-position: 250%;
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .container {
+        width: 94%;
+
+        padding: 40px 0;
+    }
+
+    .card,
+    .result-card {
+        padding: 22px;
+    }
+
+    .intro-card {
+        padding: 22px;
+    }
+
+    .question {
+        padding: 18px;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .score-ring {
+        width: 165px;
+        height: 165px;
+    }
+
+}

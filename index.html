@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Digital Safety Advisor</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+
+    <main class="container">
+
+        <!-- HEADER -->
+
+        <header class="hero">
+
+            <div class="shield">
+                🛡️
+            </div>
+
+            <p class="system-name">
+                DIGITAL SAFETY SYSTEM
+            </p>
+
+            <h1>
+                Smart Digital Safety Advisor
+            </h1>
+
+            <p class="subtitle">
+                Analyze common digital risks before you click,
+                reply or share information.
+            </p>
+
+        </header>
+
+
+        <!-- INTRO -->
+
+        <section class="intro-card">
+
+            <div class="intro-icon">
+                💡
+            </div>
+
+            <div>
+                <h2>
+                    Protect Before You Click
+                </h2>
+
+                <p>
+                    Answer a few simple questions about the message
+                    you received. Our rule-based system calculates
+                    a risk score and provides safety guidance.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- SAFETY CHECK -->
+
+        <section class="card">
+
+            <div class="section-heading">
+
+                <span>
+                    SECURITY CHECK
+                </span>
+
+                <h2>
+                    Analyze the Message
+                </h2>
+
+            </div>
+
+
+            <!-- QUESTION 1 -->
+
+            <div class="question">
+
+                <div class="number">
+                    01
+                </div>
+
+                <div class="question-content">
+
+                    <h3>
+                        Unknown Sender
+                    </h3>
+
+                    <p>
+                        Do you recognize the sender?
+                    </p>
+
+                    <select id="sender">
+
+                        <option value="0">
+                            No
+                        </option>
+
+                        <option value="1">
+                            Yes
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUESTION 2 -->
+
+            <div class="question">
+
+                <div class="number">
+                    02
+                </div>
+
+                <div class="question-content">
+
+                    <h3>
+                        Urgent Message
+                    </h3>
+
+                    <p>
+                        Does the message create pressure or fear?
+                    </p>
+
+                    <select id="urgent">
+
+                        <option value="0">
+                            No
+                        </option>
+
+                        <option value="1">
+                            Yes
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUESTION 3 -->
+
+            <div class="question">
+
+                <div class="number">
+                    03
+                </div>
+
+                <div class="question-content">
+
+                    <h3>
+                        Suspicious Link
+                    </h3>
+
+                    <p>
+                        Does the message contain a suspicious link?
+                    </p>
+
+                    <select id="link">
+
+                        <option value="0">
+                            No
+                        </option>
+
+                        <option value="1">
+                            Yes
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUESTION 4 -->
+
+            <div class="question">
+
+                <div class="number">
+                    04
+                </div>
+
+                <div class="question-content">
+
+                    <h3>
+                        OTP / Password Request
+                    </h3>
+
+                    <p>
+                        Is sensitive information being requested?
+                    </p>
+
+                    <select id="otp">
+
+                        <option value="0">
+                            No
+                        </option>
+
+                        <option value="1">
+                            Yes
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUESTION 5 -->
+
+            <div class="question">
+
+                <div class="number">
+                    05
+                </div>
+
+                <div class="question-content">
+
+                    <h3>
+                        Unrealistic Offer
+                    </h3>
+
+                    <p>
+                        Is there a suspicious prize or offer?
+                    </p>
+
+                    <select id="offer">
+
+                        <option value="0">
+                            No
+                        </option>
+
+                        <option value="1">
+                            Yes
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- BUTTON -->
+
+            <button
+                class="analyze-btn"
+                onclick="checkSafety()">
+
+                🔍 ANALYZE SAFETY
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+        </section>
+
+
+        <!-- RESULT -->
+
+        <section
+            class="result-card"
+            id="result">
+
+            <div class="result-heading">
+
+                <span>
+                    SECURITY REPORT
+                </span>
+
+                <h2>
+                    Safety Assessment
+                </h2>
+
+            </div>
+
+
+            <!-- SCORE -->
+
+            <div class="score-area">
+
+                <div
+                    class="score-ring">
+
+                    <div class="score-inside">
+
+                        <div
+                            id="resultIcon"
+                            class="result-icon">
+
+                            🛡️
+
+                        </div>
+
+                        <div
+                            id="scoreNumber"
+                            class="score-number">
+
+                            0
+
+                        </div>
+
+                        <span>
+                            / 100
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <p class="risk-caption">
+                    CURRENT RISK LEVEL
+                </p>
+
+                <h2
+                    id="level"
+                    class="risk-level">
+
+                    LOW RISK
+
+                </h2>
+
+            </div>
+
+
+            <!-- MAIN METER -->
+
+            <div class="meter">
+
+                <div
+                    id="meterFill"
+                    class="meter-fill">
+
+                </div>
+
+            </div>
+
+
+            <!-- BREAKDOWN -->
+
+            <div class="breakdown">
+
+                <h3>
+                    📊 Risk Breakdown
+                </h3>
+
+
+                <div class="risk-item">
+
+                    <div class="risk-label">
+
+                        <span>
+                            Unknown Sender
+                        </span>
+
+                        <strong id="senderPoints">
+                            0 / 15
+                        </strong>
+
+                    </div>
+
+                    <div class="risk-bar">
+                        <div id="senderBar"></div>
+                    </div>
+
+                </div>
+
+
+                <div class="risk-item">
+
+                    <div class="risk-label">
+
+                        <span>
+                            Urgent Message
+                        </span>
+
+                        <strong id="urgentPoints">
+                            0 / 15
+                        </strong>
+
+                    </div>
+
+                    <div class="risk-bar">
+                        <div id="urgentBar"></div>
+                    </div>
+
+                </div>
+
+
+                <div class="risk-item">
+
+                    <div class="risk-label">
+
+                        <span>
+                            Suspicious Link
+                        </span>
+
+                        <strong id="linkPoints">
+                            0 / 25
+                        </strong>
+
+                    </div>
+
+                    <div class="risk-bar">
+                        <div id="linkBar"></div>
+                    </div>
+
+                </div>
+
+
+                <div class="risk-item">
+
+                    <div class="risk-label">
+
+                        <span>
+                            OTP / Password
+                        </span>
+
+                        <strong id="otpPoints">
+                            0 / 30
+                        </strong>
+
+                    </div>
+
+                    <div class="risk-bar">
+                        <div id="otpBar"></div>
+                    </div>
+
+                </div>
+
+
+                <div class="risk-item">
+
+                    <div class="risk-label">
+
+                        <span>
+                            Unrealistic Offer
+                        </span>
+
+                        <strong id="offerPoints">
+                            0 / 15
+                        </strong>
+
+                    </div>
+
+                    <div class="risk-bar">
+                        <div id="offerBar"></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ANALYSIS -->
+
+            <div
+                id="analysis"
+                class="analysis">
+
+            </div>
+
+
+            <!-- RECOMMENDATION -->
+
+            <div
+                id="recommendation"
+                class="recommendation">
+
+            </div>
+
+
+            <!-- RESET -->
+
+            <button
+                class="reset-btn"
+                onclick="resetAssessment()">
+
+                ↻ NEW ASSESSMENT
+
+            </button>
+
+
+            <p class="footer-note">
+                🔐 Rule-Based Digital Safety Assessment
+            </p>
+
+            <p class="stay-safe">
+                Stay Safe • Stay Alert
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
