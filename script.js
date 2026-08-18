@@ -1,11 +1,8 @@
 // ==========================================
-// SMART DIGITAL SAFETY ADVISOR
+// RISK WEIGHTS
 // ==========================================
 
-
-// Risk weights
-
-const RISK = {
+const weights = {
     sender: 15,
     urgent: 15,
     link: 25,
@@ -15,10 +12,12 @@ const RISK = {
 
 
 // ==========================================
-// ANALYZE
+// MAIN FUNCTION
 // ==========================================
 
-function checkSafety() {
+function analyzeSafety() {
+
+    // Get values from the five questions
 
     const sender =
         Number(document.getElementById("sender").value);
@@ -36,391 +35,432 @@ function checkSafety() {
         Number(document.getElementById("offer").value);
 
 
-    // Calculate risk
+    // Get message and link
 
-    const senderRisk =
-        sender * RISK.sender;
+    const message =
+        document
+            .getElementById("messageInput")
+            .value
+            .toLowerCase();
 
-    const urgentRisk =
-        urgent * RISK.urgent;
-
-    const linkRisk =
-        link * RISK.link;
-
-    const otpRisk =
-        otp * RISK.otp;
-
-    const offerRisk =
-        offer * RISK.offer;
+    const linkText =
+        document
+            .getElementById("linkInput")
+            .value
+            .toLowerCase();
 
 
-    const total =
-        senderRisk +
-        urgentRisk +
-        linkRisk +
-        otpRisk +
-        offerRisk;
+    // ======================================
+    // CALCULATE SCORE
+    // ======================================
+
+    const senderScore =
+        sender * weights.sender;
+
+    const urgentScore =
+        urgent * weights.urgent;
+
+    const linkScore =
+        link * weights.link;
+
+    const otpScore =
+        otp * weights.otp;
+
+    const offerScore =
+        offer * weights.offer;
 
 
-    // Score animation
-
-    animateScore(total);
-
-
-    // Main progress bar
-
-    document.getElementById(
-        "meterFill"
-    ).style.width = total + "%";
+    const score =
+        senderScore +
+        urgentScore +
+        linkScore +
+        otpScore +
+        offerScore;
 
 
-    // Breakdown numbers
-
-    document.getElementById(
-        "senderPoints"
-    ).textContent =
-        senderRisk + " / 15";
-
-    document.getElementById(
-        "urgentPoints"
-    ).textContent =
-        urgentRisk + " / 15";
-
-    document.getElementById(
-        "linkPoints"
-    ).textContent =
-        linkRisk + " / 25";
-
-    document.getElementById(
-        "otpPoints"
-    ).textContent =
-        otpRisk + " / 30";
-
-    document.getElementById(
-        "offerPoints"
-    ).textContent =
-        offerRisk + " / 15";
-
-
-    // Breakdown bars
-
-    document.getElementById(
-        "senderBar"
-    ).style.width =
-        (senderRisk / 15 * 100) + "%";
-
-
-    document.getElementById(
-        "urgentBar"
-    ).style.width =
-        (urgentRisk / 15 * 100) + "%";
-
-
-    document.getElementById(
-        "linkBar"
-    ).style.width =
-        (linkRisk / 25 * 100) + "%";
-
-
-    document.getElementById(
-        "otpBar"
-    ).style.width =
-        (otpRisk / 30 * 100) + "%";
-
-
-    document.getElementById(
-        "offerBar"
-    ).style.width =
-        (offerRisk / 15 * 100) + "%";
-
-
-    // Risk level
+    // ======================================
+    // RISK LEVEL
+    // ======================================
 
     let level;
     let icon;
-    let color;
 
 
-    if (total >= 70) {
+    if (score <= 30) {
 
-        level = "HIGH RISK";
-        icon = "🚨";
-        color = "#ef4444";
+        level = "LOW RISK";
+
+        icon = "🟢";
 
     }
 
-    else if (total >= 40) {
+    else if (score <= 60) {
 
         level = "MEDIUM RISK";
-        icon = "⚠️";
-        color = "#f59e0b";
+
+        icon = "🟡";
 
     }
 
     else {
 
-        level = "LOW RISK";
-        icon = "🛡️";
-        color = "#22c55e";
+        level = "HIGH RISK";
+
+        icon = "🚨";
 
     }
+
+
+    // ======================================
+    // DISPLAY SCORE
+    // ======================================
+
+    document.getElementById(
+        "scoreNumber"
+    ).textContent = score;
 
 
     document.getElementById(
         "level"
     ).textContent = level;
 
-    document.getElementById(
-        "level"
-    ).style.color = color;
 
     document.getElementById(
         "resultIcon"
     ).textContent = icon;
 
 
-    // ==========================================
-    // ANALYSIS
-    // ==========================================
+    // ======================================
+    // MAIN PROGRESS BAR
+    // ======================================
 
-    let analysis = `
-        <h3>🔍 Risk Analysis</h3>
-    `;
-
-
-    analysis += sender
-        ? "<p>⚠️ Unknown sender detected</p>"
-        : "<p>✓ Sender appears known</p>";
+    document.getElementById(
+        "meterFill"
+    ).style.width = score + "%";
 
 
-    analysis += urgent
-        ? "<p>⚠️ Urgent or threatening language detected</p>"
-        : "<p>✓ No urgent language detected</p>";
+    // ======================================
+    // CIRCLE PROGRESS
+    // ======================================
+
+    const circle =
+        document.getElementById(
+            "progressCircle"
+        );
 
 
-    analysis += link
-        ? "<p>⚠️ Suspicious link detected</p>"
-        : "<p>✓ No suspicious link detected</p>";
+    const circumference = 616;
 
 
-    analysis += otp
-        ? "<p>⚠️ OTP/password request detected</p>"
-        : "<p>✓ No OTP/password request detected</p>";
+    const offset =
+        circumference -
+        (score / 100) * circumference;
 
 
-    analysis += offer
-        ? "<p>⚠️ Unrealistic offer detected</p>"
-        : "<p>✓ No unrealistic offer detected</p>";
+    circle.style.strokeDashoffset =
+        offset;
+
+
+    // ======================================
+    // RISK BREAKDOWN
+    // ======================================
+
+    updateBar(
+        "senderPoints",
+        "senderBar",
+        senderScore,
+        weights.sender
+    );
+
+
+    updateBar(
+        "urgentPoints",
+        "urgentBar",
+        urgentScore,
+        weights.urgent
+    );
+
+
+    updateBar(
+        "linkPoints",
+        "linkBar",
+        linkScore,
+        weights.link
+    );
+
+
+    updateBar(
+        "otpPoints",
+        "otpBar",
+        otpScore,
+        weights.otp
+    );
+
+
+    updateBar(
+        "offerPoints",
+        "offerBar",
+        offerScore,
+        weights.offer
+    );
+
+
+    // ======================================
+    // MESSAGE ANALYSIS
+    // ======================================
+
+    showMessageAnalysis(
+        message,
+        linkText
+    );
+
+
+    // ======================================
+    // RECOMMENDATION
+    // ======================================
+
+    showRecommendation(score);
+
+
+    // ======================================
+    // SHOW RESULT
+    // ======================================
+
+    document
+        .getElementById("result")
+        .scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+}
+
+
+// ==========================================
+// UPDATE RISK BAR
+// ==========================================
+
+function updateBar(
+    textId,
+    barId,
+    value,
+    maximum
+) {
+
+    document.getElementById(
+        textId
+    ).textContent =
+        value + " / " + maximum;
+
+
+    const percentage =
+        (value / maximum) * 100;
 
 
     document.getElementById(
-        "analysis"
-    ).innerHTML = analysis;
+        barId
+    ).style.width =
+        percentage + "%";
+}
 
 
-    // ==========================================
-    // RECOMMENDATION
-    // ==========================================
+// ==========================================
+// MESSAGE ANALYSIS
+// ==========================================
 
-    let recommendation;
+function showMessageAnalysis(
+    message,
+    linkText
+) {
+
+    const analysis =
+        document.getElementById(
+            "analysis"
+        );
 
 
-    if (total >= 70) {
+    let warnings = [];
 
-        recommendation = `
-            <h3>🚨 Recommended Action</h3>
+
+    // OTP
+
+    if (
+        message.includes("otp") ||
+        message.includes("password") ||
+        message.includes("passcode") ||
+        message.includes("pin")
+    ) {
+
+        warnings.push(
+            "⚠️ Message contains OTP, password or PIN related words."
+        );
+
+    }
+
+
+    // URGENT
+
+    if (
+        message.includes("urgent") ||
+        message.includes("immediately") ||
+        message.includes("act now") ||
+        message.includes("verify now") ||
+        message.includes("account blocked") ||
+        message.includes("account suspended")
+    ) {
+
+        warnings.push(
+            "⚠️ Message contains urgent or pressure-based language."
+        );
+
+    }
+
+
+    // OFFER
+
+    if (
+        message.includes("you won") ||
+        message.includes("winner") ||
+        message.includes("prize") ||
+        message.includes("lottery") ||
+        message.includes("reward") ||
+        message.includes("jackpot")
+    ) {
+
+        warnings.push(
+            "⚠️ Message contains a prize or reward related term."
+        );
+
+    }
+
+
+    // LINK
+
+    if (
+        message.includes("http://") ||
+        message.includes("https://") ||
+        message.includes("www.") ||
+        message.includes("click here") ||
+        linkText.includes("http://") ||
+        linkText.includes("https://") ||
+        linkText.includes("www.")
+    ) {
+
+        warnings.push(
+            "⚠️ A link or link-related content was detected."
+        );
+
+    }
+
+
+    // NO WARNING
+
+    if (warnings.length === 0) {
+
+        analysis.innerHTML = `
+            <p>
+                ✓ No common suspicious keywords were detected
+                in the provided message.
+            </p>
+        `;
+
+        return;
+    }
+
+
+    // DISPLAY WARNINGS
+
+    let html = "";
+
+    for (
+        let i = 0;
+        i < warnings.length;
+        i++
+    ) {
+
+        html +=
+            "<p>" +
+            warnings[i] +
+            "</p>";
+
+    }
+
+
+    html += `
+        <p>
+            ℹ️ These are keyword-based observations.
+            The final risk score is calculated from your
+            Yes/No answers.
+        </p>
+    `;
+
+
+    analysis.innerHTML = html;
+}
+
+
+// ==========================================
+// RECOMMENDATION
+// ==========================================
+
+function showRecommendation(score) {
+
+    const recommendation =
+        document.getElementById(
+            "recommendation"
+        );
+
+
+    if (score <= 30) {
+
+        recommendation.innerHTML = `
+
+            <h3>
+                🟢 Recommended Action
+            </h3>
 
             <p>
-                <strong>HIGH RISK:</strong>
-                Do not click suspicious links or share
-                OTP, passwords or payment information.
-                Verify the source through an official channel.
+                LOW RISK: Few common risk indicators were selected.
+                You can proceed, but continue to stay cautious.
             </p>
+
         `;
 
     }
 
-    else if (total >= 40) {
+    else if (score <= 60) {
 
-        recommendation = `
-            <h3>🟠 Recommended Action</h3>
+        recommendation.innerHTML = `
+
+            <h3>
+                🟡 Recommended Action
+            </h3>
 
             <p>
-                <strong>MEDIUM RISK:</strong>
-                Verify the sender or source before taking
-                any action.
+                MEDIUM RISK: Some warning signs were selected.
+                Verify the sender or source before taking action.
             </p>
+
         `;
 
     }
 
     else {
 
-        recommendation = `
-            <h3>🟢 Recommended Action</h3>
+        recommendation.innerHTML = `
+
+            <h3>
+                🚨 Recommended Action
+            </h3>
 
             <p>
-                <strong>LOW RISK:</strong>
-                No major warning signs detected.
-                You can proceed, but always stay cautious.
+                HIGH RISK: Do not click suspicious links or
+                share OTP, passwords or payment information.
+                Verify the source through an official channel.
             </p>
+
         `;
 
     }
-
-
-    document.getElementById(
-        "recommendation"
-    ).innerHTML = recommendation;
-
-
-    // Scroll to result
-
-    setTimeout(() => {
-
-        document.getElementById(
-            "result"
-        ).scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
-
-    }, 300);
-
-}
-
-
-// ==========================================
-// SCORE + CIRCLE ANIMATION
-// ==========================================
-
-function animateScore(finalScore) {
-
-    const scoreElement =
-        document.getElementById("scoreNumber");
-
-    const circle =
-        document.getElementById("progressCircle");
-
-
-    // Circle circumference
-    // 2 × π × 95 ≈ 597
-
-    const circumference = 597;
-
-
-    circle.style.strokeDasharray =
-        circumference;
-
-    circle.style.strokeDashoffset =
-        circumference;
-
-
-    let startTime = null;
-
-    const duration = 1200;
-
-
-    function animation(currentTime) {
-
-        if (!startTime) {
-            startTime = currentTime;
-        }
-
-
-        const elapsed =
-            currentTime - startTime;
-
-
-        const progress =
-            Math.min(
-                elapsed / duration,
-                1
-            );
-
-
-        // Smooth easing
-
-        const eased =
-            1 -
-            Math.pow(
-                1 - progress,
-                3
-            );
-
-
-        const currentScore =
-            Math.floor(
-                finalScore * eased
-            );
-
-
-        // Number
-
-        scoreElement.textContent =
-            currentScore;
-
-
-        // Circular progress
-
-        const offset =
-            circumference -
-            (
-                currentScore /
-                100
-            ) *
-            circumference;
-
-
-        circle.style.strokeDashoffset =
-            offset;
-
-
-        // Circle color
-
-        if (finalScore >= 70) {
-
-            circle.style.stroke =
-                "#ef4444";
-
-        }
-
-        else if (finalScore >= 40) {
-
-            circle.style.stroke =
-                "#f59e0b";
-
-        }
-
-        else {
-
-            circle.style.stroke =
-                "#22c55e";
-
-        }
-
-
-        if (progress < 1) {
-
-            requestAnimationFrame(
-                animation
-            );
-
-        }
-
-        else {
-
-            scoreElement.textContent =
-                finalScore;
-
-        }
-
-    }
-
-
-    requestAnimationFrame(
-        animation
-    );
 }
 
 
@@ -430,137 +470,151 @@ function animateScore(finalScore) {
 
 function resetAssessment() {
 
+    // Clear message
+
+    document.getElementById(
+        "messageInput"
+    ).value = "";
+
+
+    // Clear link
+
+    document.getElementById(
+        "linkInput"
+    ).value = "";
+
+
+    // Reset questions
+
     document.getElementById(
         "sender"
     ).value = "0";
+
 
     document.getElementById(
         "urgent"
     ).value = "0";
 
+
     document.getElementById(
         "link"
     ).value = "0";
 
+
     document.getElementById(
         "otp"
     ).value = "0";
+
 
     document.getElementById(
         "offer"
     ).value = "0";
 
 
-    // Score
+    // Reset score
 
     document.getElementById(
         "scoreNumber"
     ).textContent = "0";
 
 
-    // Circle
-
-    const circle =
-        document.getElementById(
-            "progressCircle"
-        );
-
-    circle.style.strokeDashoffset =
-        "597";
-
-    circle.style.stroke =
-        "#22c55e";
+    document.getElementById(
+        "level"
+    ).textContent = "LOW RISK";
 
 
-    // Meter
+    document.getElementById(
+        "resultIcon"
+    ).textContent = "🛡️";
+
+
+    // Reset meter
 
     document.getElementById(
         "meterFill"
     ).style.width = "0%";
 
 
-    // Breakdown
-
     document.getElementById(
-        "senderPoints"
-    ).textContent = "0 / 15";
-
-    document.getElementById(
-        "urgentPoints"
-    ).textContent = "0 / 15";
-
-    document.getElementById(
-        "linkPoints"
-    ).textContent = "0 / 25";
-
-    document.getElementById(
-        "otpPoints"
-    ).textContent = "0 / 30";
-
-    document.getElementById(
-        "offerPoints"
-    ).textContent = "0 / 15";
+        "progressCircle"
+    ).style.strokeDashoffset = "616";
 
 
-    document.getElementById(
-        "senderBar"
-    ).style.width = "0%";
+    // Reset bars
 
-    document.getElementById(
-        "urgentBar"
-    ).style.width = "0%";
-
-    document.getElementById(
-        "linkBar"
-    ).style.width = "0%";
-
-    document.getElementById(
-        "otpBar"
-    ).style.width = "0%";
-
-    document.getElementById(
-        "offerBar"
-    ).style.width = "0%";
+    updateBar(
+        "senderPoints",
+        "senderBar",
+        0,
+        15
+    );
 
 
-    // Risk level
-
-    document.getElementById(
-        "level"
-    ).textContent =
-        "LOW RISK";
-
-    document.getElementById(
-        "level"
-    ).style.color =
-        "#22c55e";
+    updateBar(
+        "urgentPoints",
+        "urgentBar",
+        0,
+        15
+    );
 
 
-    // Icon
+    updateBar(
+        "linkPoints",
+        "linkBar",
+        0,
+        25
+    );
 
-    document.getElementById(
-        "resultIcon"
-    ).textContent =
-        "🛡️";
+
+    updateBar(
+        "otpPoints",
+        "otpBar",
+        0,
+        30
+    );
 
 
-    // Clear result sections
+    updateBar(
+        "offerPoints",
+        "offerBar",
+        0,
+        15
+    );
+
+
+    // Reset analysis
 
     document.getElementById(
         "analysis"
-    ).innerHTML = "";
+    ).innerHTML = `
+        <p>
+            Enter a message and analyze it.
+        </p>
+    `;
+
+
+    // Reset recommendation
 
     document.getElementById(
         "recommendation"
-    ).innerHTML = "";
+    ).innerHTML = `
+
+        <h3>
+            🛡️ Recommended Action
+        </h3>
+
+        <p>
+            Analyze the message to receive safety guidance.
+        </p>
+
+    `;
 
 
-    // Scroll
+    window.scrollTo({
 
-    document.querySelector(
-        ".card"
-    ).scrollIntoView({
+        top: 0,
+
         behavior: "smooth"
-    });
 
+    });
 }
