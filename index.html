@@ -12,89 +12,106 @@
 
 <body>
 
-    <div class="glow glow1"></div>
-    <div class="glow glow2"></div>
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
 
     <main class="container">
 
         <!-- HERO -->
 
-        <section class="hero">
+        <header class="hero">
 
-            <div class="shield">🛡️</div>
+            <div class="shield-icon">
+                🛡️
+            </div>
 
-            <p class="system-title">
+            <span class="system-label">
                 DIGITAL SAFETY SYSTEM
-            </p>
+            </span>
 
             <h1>
                 Smart Digital Safety Advisor
             </h1>
 
-            <p class="subtitle">
+            <p>
                 Analyze common digital risks before you click,
                 reply or share information.
             </p>
 
-        </section>
+        </header>
 
 
-        <!-- INTRO -->
-
-        <section class="intro">
-
-            <div class="intro-icon">
-                💡
-            </div>
-
-            <div>
-                <h2>
-                    Protect Before You Click
-                </h2>
-
-                <p>
-                    Answer a few simple questions about the message
-                    you received. Our rule-based system calculates
-                    a risk score and provides safety guidance.
-                </p>
-            </div>
-
-        </section>
-
-
-        <!-- SAFETY CHECK -->
+        <!-- MESSAGE -->
 
         <section class="card">
 
-            <div class="heading">
+            <div class="section-heading">
 
-                <span>
-                    SECURITY CHECK
-                </span>
+                <span>01 — MESSAGE ANALYSIS</span>
 
                 <h2>
-                    Analyze the Message
+                    Paste Your Message
                 </h2>
+
+                <p>
+                    Paste the message or link you received.
+                    The system will identify common warning signs.
+                </p>
 
             </div>
 
 
-            <!-- 01 -->
+            <textarea
+                id="messageInput"
+                placeholder="Paste your message here..."
+            ></textarea>
+
+
+            <input
+                type="text"
+                id="linkInput"
+                placeholder="Optional: Paste a link here..."
+            >
+
+        </section>
+
+
+        <!-- QUESTIONS -->
+
+        <section class="card">
+
+            <div class="section-heading">
+
+                <span>02 — SECURITY CHECK</span>
+
+                <h2>
+                    Answer the Questions
+                </h2>
+
+                <p>
+                    Select Yes if the risk factor is present.
+                    Select No if it is not present.
+                </p>
+
+            </div>
+
+
+            <!-- QUESTION 1 -->
 
             <div class="question">
 
-                <div class="number">
+                <div class="question-number">
                     01
                 </div>
 
-                <div class="question-body">
+                <div class="question-content">
 
                     <h3>
                         Unknown Sender
                     </h3>
 
                     <p>
-                        Do you recognize the sender?
+                        Is the sender unknown to you?
                     </p>
 
                     <select id="sender">
@@ -114,15 +131,15 @@
             </div>
 
 
-            <!-- 02 -->
+            <!-- QUESTION 2 -->
 
             <div class="question">
 
-                <div class="number">
+                <div class="question-number">
                     02
                 </div>
 
-                <div class="question-body">
+                <div class="question-content">
 
                     <h3>
                         Urgent Message
@@ -149,15 +166,15 @@
             </div>
 
 
-            <!-- 03 -->
+            <!-- QUESTION 3 -->
 
             <div class="question">
 
-                <div class="number">
+                <div class="question-number">
                     03
                 </div>
 
-                <div class="question-body">
+                <div class="question-content">
 
                     <h3>
                         Suspicious Link
@@ -184,15 +201,15 @@
             </div>
 
 
-            <!-- 04 -->
+            <!-- QUESTION 4 -->
 
             <div class="question">
 
-                <div class="number">
+                <div class="question-number">
                     04
                 </div>
 
-                <div class="question-body">
+                <div class="question-content">
 
                     <h3>
                         OTP / Password Request
@@ -219,15 +236,15 @@
             </div>
 
 
-            <!-- 05 -->
+            <!-- QUESTION 5 -->
 
             <div class="question">
 
-                <div class="number">
+                <div class="question-number">
                     05
                 </div>
 
-                <div class="question-body">
+                <div class="question-content">
 
                     <h3>
                         Unrealistic Offer
@@ -254,13 +271,13 @@
             </div>
 
 
+            <!-- ONE BUTTON -->
+
             <button
-                class="analyze-btn"
-                onclick="checkSafety()">
+                class="primary-button"
+                onclick="analyzeSafety()">
 
                 🔍 ANALYZE SAFETY
-
-                <span>→</span>
 
             </button>
 
@@ -270,14 +287,12 @@
         <!-- RESULT -->
 
         <section
-            class="result-card"
+            class="card result-card"
             id="result">
 
-            <div class="heading">
+            <div class="section-heading">
 
-                <span>
-                    SECURITY REPORT
-                </span>
+                <span>03 — SECURITY REPORT</span>
 
                 <h2>
                     Safety Assessment
@@ -288,28 +303,28 @@
 
             <!-- SCORE -->
 
-            <div class="score-section">
+            <div class="score-area">
 
                 <div class="score-circle">
 
                     <svg
-                        class="progress-ring"
-                        width="220"
-                        height="220">
+                        width="230"
+                        height="230"
+                        viewBox="0 0 230 230">
 
                         <circle
-                            class="ring-bg"
-                            cx="110"
-                            cy="110"
-                            r="95">
+                            class="circle-background"
+                            cx="115"
+                            cy="115"
+                            r="98">
                         </circle>
 
                         <circle
                             id="progressCircle"
-                            class="ring-progress"
-                            cx="110"
-                            cy="110"
-                            r="95">
+                            class="circle-progress"
+                            cx="115"
+                            cy="115"
+                            r="98">
                         </circle>
 
                     </svg>
@@ -325,24 +340,20 @@
 
                         </div>
 
-                        <div
-                            id="scoreNumber"
-                            class="score-number">
-
+                        <strong id="scoreNumber">
                             0
+                        </strong>
 
-                        </div>
-
-                        <div class="out-of">
+                        <span>
                             / 100
-                        </div>
+                        </span>
 
                     </div>
 
                 </div>
 
 
-                <p class="current-risk">
+                <p class="risk-caption">
                     CURRENT RISK LEVEL
                 </p>
 
@@ -357,20 +368,19 @@
             </div>
 
 
-            <!-- MAIN PROGRESS -->
+            <!-- MAIN METER -->
 
-            <div class="main-meter">
+            <div class="main-progress">
 
                 <div
                     id="meterFill"
-                    class="main-meter-fill">
-
+                    class="meter-fill">
                 </div>
 
             </div>
 
 
-            <!-- BREAKDOWN -->
+            <!-- RISK BREAKDOWN -->
 
             <div class="breakdown">
 
@@ -394,7 +404,9 @@
                     </div>
 
                     <div class="risk-bar">
+
                         <div id="senderBar"></div>
+
                     </div>
 
                 </div>
@@ -415,7 +427,9 @@
                     </div>
 
                     <div class="risk-bar">
+
                         <div id="urgentBar"></div>
+
                     </div>
 
                 </div>
@@ -436,7 +450,9 @@
                     </div>
 
                     <div class="risk-bar">
+
                         <div id="linkBar"></div>
+
                     </div>
 
                 </div>
@@ -457,7 +473,9 @@
                     </div>
 
                     <div class="risk-bar">
+
                         <div id="otpBar"></div>
+
                     </div>
 
                 </div>
@@ -478,7 +496,9 @@
                     </div>
 
                     <div class="risk-bar">
+
                         <div id="offerBar"></div>
+
                     </div>
 
                 </div>
@@ -486,11 +506,21 @@
             </div>
 
 
-            <!-- ANALYSIS -->
+            <!-- MESSAGE ANALYSIS -->
 
-            <div
-                id="analysis"
-                class="analysis">
+            <div class="analysis-box">
+
+                <h3>
+                    🔍 Risk Analysis
+                </h3>
+
+                <div id="analysis">
+
+                    <p>
+                        Enter a message and analyze it.
+                    </p>
+
+                </div>
 
             </div>
 
@@ -501,11 +531,21 @@
                 id="recommendation"
                 class="recommendation">
 
+                <h3>
+                    🛡️ Recommended Action
+                </h3>
+
+                <p>
+                    Analyze the message to receive safety guidance.
+                </p>
+
             </div>
 
 
+            <!-- RESET -->
+
             <button
-                class="reset-btn"
+                class="reset-button"
                 onclick="resetAssessment()">
 
                 ↻ NEW ASSESSMENT
@@ -513,13 +553,15 @@
             </button>
 
 
-            <p class="footer">
-                🔐 Rule-Based Digital Safety Assessment
-            </p>
+            <div class="footer">
 
-            <p class="stay-safe">
-                Stay Safe • Stay Alert
-            </p>
+                🔐 Rule-Based Digital Safety Assessment
+
+                <span>
+                    Stay Safe • Stay Alert
+                </span>
+
+            </div>
 
         </section>
 
